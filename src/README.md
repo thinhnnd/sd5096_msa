@@ -8,6 +8,7 @@ You can open this sample in the Dev Environments.
 
 Project structure:
 ```
+
 .
 ├── backend
 │   ├── Dockerfile
