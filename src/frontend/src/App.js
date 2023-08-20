@@ -4,7 +4,11 @@ import "./App.scss";
 import AddTodo from "./components/AddTodo";
 import TodoList from "./components/TodoList";
 
+const backendUrl = process.env.REACT_APP_API_URL;
+
+
 export default class App extends React.Component {
+
   constructor(props) {
     super(props);
 
@@ -14,8 +18,9 @@ export default class App extends React.Component {
   }
 
   componentDidMount() {
+    console.log(this.backendUrl)
     axios
-      .get("/api")
+      .get(`${backendUrl}/api`)
       .then((response) => {
         this.setState({
           todos: response.data.data,
@@ -26,7 +31,7 @@ export default class App extends React.Component {
 
   handleAddTodo = (value) => {
     axios
-      .post("/api/todos", { text: value })
+      .post(`${backendUrl}/api/todos`, { text: value })
       .then(() => {
         this.setState({
           todos: [...this.state.todos, { text: value }],

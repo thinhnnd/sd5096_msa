@@ -31,6 +31,7 @@ const routes = (app) => {
       });
   });
 
+
   //it's a prefix before api it is useful when you have many modules and you want to
   //differentiate b/w each module you can use this technique
   app.use("/api", router);

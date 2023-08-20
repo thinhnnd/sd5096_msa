@@ -1,4 +1,4 @@
-FROM node:lts-buster-slim AS development
+FROM node:lts-buster AS development
 
 # Create app directory
 WORKDIR /usr/src/app
@@ -9,7 +9,7 @@ RUN npm ci
 
 COPY . /usr/src/app
 
-EXPOSE 3000
+EXPOSE 5000
 
 CMD [ "npm", "run", "dev" ]
 

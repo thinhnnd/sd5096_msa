@@ -1,0 +1,52 @@
+# Use the official Node.js LTS-buster base image
+FROM node:lts-buster as build
+# Create app directory
+WORKDIR /app
+
+# Copy dependency definitions
+COPY package*.json ./
+
+# Install dependecies
+#RUN npm set progress=false \
+#    && npm config set depth 0 \
+#    && npm i install
+RUN npm install
+
+# Copy the rest of the application code to the container
+COPY . .
+
+
+# Build the React app
+RUN npm run build
+
+
+# Use a smaller image for production
+FROM node:lts-buster-slim
+
+# Set the working directory in the container
+WORKDIR /app
+
+# Copy the built app from the previous stage
+COPY --from=build /app/build ./build
+
+# Expose the port the app runs in
+EXPOSE 3000
+
+# Serve the app
+CMD ["npx", "serve", "-s", "build", "-l", "3000"]
+
+#FROM development as dev-envs
+#ENV DANGEROUSLY_DISABLE_HOST_CHECK=true
+#
+#RUN apt-get update
+#RUN apt-get install -y --no-install-recommends git
+#
+#
+#RUN useradd -s /bin/bash -m vscode
+#RUN groupadd docker
+#RUN usermod -aG docker vscode
+#
+#
+## install Docker tools (cli, buildx, compose)
+#COPY --from=gloursdocker/docker / /
+#CMD [ "npm", "start" ]

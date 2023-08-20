@@ -1,12 +1,14 @@
 services:
   frontend:
     image: frontend
+    build:
+      dockerfile: Dockerfile
+      context: "./frontend"
+    environment:
+      - REACT_APP_API_URL=http://localhost:5000
     ports:
       - 3000:3000
     stdin_open: true
-    volumes:
-      - ./frontend:/usr/src/app
-      - /usr/src/app/node_modules
     restart: always
     networks:
       - react-express
@@ -16,6 +18,11 @@ services:
   backend:
     restart: always
     image: backend
+    build:
+      dockerfile: Dockerfile
+      context: "./backend"
+    ports:
+      - 5000:5000
     volumes:
       - ./backend:/usr/src/app
       - /usr/src/app/node_modules
@@ -29,7 +36,7 @@ services:
     restart: always
     image: mongo:4.2.0
     volumes:
-      - ./data:/data/db
+      - ./user/temp/data:/data/db
     networks:
       - express-mongo
     expose:
