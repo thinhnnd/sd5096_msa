@@ -27,7 +27,7 @@ pipeline {
                 dir('src/backend') {
                     script {
                         def backendImage = docker.build("${env.BACKEND_REPO}:${env.BUILD_NUMBER}")
-                        docker.withRegistry("https://${env.AWS_ACCOUNT_ID}.dkr.ecr.${env.AWS_REGION}.amazonaws.com/practical-devops-erc", "${env.AWS_CREDENTIAL_ID}") {
+                        docker.withRegistry("https://${env.AWS_ACCOUNT_ID}.dkr.ecr.${env.AWS_REGION}.amazonaws.com/practical-devops-erc", "ecr:ap-southeast-1:${env.AWS_CREDENTIAL_ID}") {
                             backendImage.push("${BACKEND_REPO}:${env.BUILD_NUMBER}")
                             backendImage.push("latest")
                         }
