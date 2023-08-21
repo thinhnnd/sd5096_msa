@@ -38,17 +38,6 @@ pipeline {
                     }
                 }
                 echo 'done buiding backend image.'
-
-                /* script {
-                    // Build backend Docker image
-                    def backendImage = docker.build(context: 'src/backend', dockerfile: 'src/backend/Dockerfile', tag: "${BACKEND_REPO}:${env.BUILD_NUMBER}")
-                    // Push backend image to ECR
-                    withAWS(region: AWS_REGION, credentials: 'aws-credential') {
-                        docker.withRegistry(ECR_REGISTRY, 'ecr:ap-southeast-1:my-aws-credentials') {
-                            backendImage.push()
-                        }
-                    }
-                } */
             }
         }
         
@@ -56,16 +45,15 @@ pipeline {
             steps {
                 echo 'Built front end image'
 
-                /* script {
-                    // Build frontend Docker image
-                    def frontendImage = docker.build(context: 'src/frontend', dockerfile: 'src/frontend/Dockerfile', tag: "${FRONTEND_REPO}:${env.BUILD_NUMBER}")
-                    // Push frontend image to ECR
-                    withAWS(region: AWS_REGION, credentials: 'aws-credential') {
-                        docker.withRegistry(ECR_REGISTRY, 'ap-southeast-1:my-aws-credentials') {
-                            frontendImage.push()
+                dir('src/frontend') {
+                    script {
+                        def frontendImage = docker.build("${env.FRONTEND_REPO}:${env.BUILD_NUMBER}")
+                        docker.withRegistry("https://${env.AWS_ACCOUNT_ID}.dkr.ecr.${env.AWS_REGION}.amazonaws.com/${env.FRONTEND_REPO}", "ecr:ap-southeast-1:${env.AWS_CREDENTIAL_ID}") {
+                            frontendImage.push("${env.BUILD_NUMBER}")
+                            frontendImage.push("latest")
                         }
                     }
-                }*/
+                }
             }
         }   
 
