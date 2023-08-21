@@ -9,7 +9,7 @@ pipeline {
         BACKEND_REPO = 'practical-devops-erc/backend'
         FRONTEND_REPO = 'practical-devops-erc/frontend'
         AWS_ACCOUNT_ID = '309276322609'
-        AWS_CREDENTIAL_ID = 'thinhnnd_aws_credential'
+        AWS_CREDENTIAL_ID = 'thinhnnd_aws_access_credential'
     }
 
     stages {
