@@ -22,7 +22,7 @@ pipeline {
         
         stage('Build Backend Image') {
             steps {
-                echo 'Built backend image'
+                echo 'Built backend image update'
                 /* script {
                     // Build backend Docker image
                     def backendImage = docker.build(context: 'src/backend', dockerfile: 'src/backend/Dockerfile', tag: "${BACKEND_REPO}:${env.BUILD_NUMBER}")
