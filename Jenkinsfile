@@ -6,8 +6,8 @@ pipeline {
 
     environment {
         AWS_REGION = 'ap-southeast-1'
-        BACKEND_REPO = 'practical-devops-erc/backend'
-        FRONTEND_REPO = 'practical-devops-erc/frontend'
+        BACKEND_REPO = 'backend'
+        FRONTEND_REPO = 'frontend'
         AWS_ACCOUNT_ID = '309276322609'
         AWS_CREDENTIAL_ID = 'thinhnnd_aws_credential'
     }
@@ -31,7 +31,7 @@ pipeline {
                 dir('src/backend') {
                     script {
                         def backendImage = docker.build("${env.BACKEND_REPO}:${env.BUILD_NUMBER}")
-                        docker.withRegistry("https://${env.AWS_ACCOUNT_ID}.dkr.ecr.${env.AWS_REGION}.amazonaws.com/practical-devops-erc", "ecr:ap-southeast-1:${env.AWS_CREDENTIAL_ID}") {
+                        docker.withRegistry("https://${env.AWS_ACCOUNT_ID}.dkr.ecr.${env.AWS_REGION}.amazonaws.com/${env.BACKEND_REPO}", "ecr:ap-southeast-1:${env.AWS_CREDENTIAL_ID}") {
                             backendImage.push("${env.BUILD_NUMBER}")
                             backendImage.push("latest")
                         }
