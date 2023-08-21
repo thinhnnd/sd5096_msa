@@ -9,7 +9,7 @@ pipeline {
         BACKEND_REPO = 'practical-devops-erc/backend'
         FRONTEND_REPO = 'practical-devops-erc/frontend'
         AWS_ACCOUNT_ID = '309276322609'
-        AWS_CREDENTIAL_ID
+        AWS_CREDENTIAL_ID = 'thinhnnd_aws_credential'
     }
 
     stages {
@@ -27,7 +27,7 @@ pipeline {
                 dir('src/backend') {
                     script {
                         def backendImage = docker.build("${env.BACKEND_REPO}:${env.BUILD_NUMBER}")
-                        docker.withRegistry("https://${env.AWS_ACCOUNT_ID}.dkr.ecr.${env.AWS_REGION}.amazonaws.com/practical-devops-erc", 'thinhnnd_aws_credential') {
+                        docker.withRegistry("https://${env.AWS_ACCOUNT_ID}.dkr.ecr.${env.AWS_REGION}.amazonaws.com/practical-devops-erc", "${ENV.AWS_CREDENTIAL_ID}") {
                             backendImage.push("${BACKEND_REPO}:${env.BUILD_NUMBER}")
                             backendImage.push("latest")
                         }
