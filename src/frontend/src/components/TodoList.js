@@ -41,7 +41,7 @@ export default class TodoList extends React.Component {
     return todos.length > 0 ? (
       this.renderTodos(todos)
     ) : (
-      <div className="alert alert-primary" role="alert">
+      <div className="alert alert-success" role="alert">
         No Todos to display
       </div>
     );
