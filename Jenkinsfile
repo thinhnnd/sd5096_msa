@@ -40,7 +40,7 @@ pipeline {
                             ],
                         ]
 
-                        def filePath = "config/config.json"
+                        def filePath = "./config/config.json"
                         writeFile file: filePath, text: groovy.json.JsonOutput.toJson(jsonData), overwrite: true
 
                         echo 'Env variable already setup.'
