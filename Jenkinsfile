@@ -74,20 +74,22 @@ pipeline {
 
         stage('Deploy to EKS') {
             steps {
+                script {
 
-                withCredentials([[
-                    $class: 'AmazonWebServicesCredentialsBinding',
-                    credentialsId: "credentials-id-here",
-                    accessKeyVariable: 'AWS_ACCESS_KEY_ID',
-                    secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
-                ]]) {
-                    env.AWS_ACCESS_KEY_ID = accessKeyVariable
-                    env.AWS_SECRET_ACCESS_KEY = secretKeyVariable
+                    withCredentials([[
+                        $class: 'AmazonWebServicesCredentialsBinding',
+                        credentialsId: "credentials-id-here",
+                        accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+                        secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
+                    ]]) {
+                        env.AWS_ACCESS_KEY_ID = accessKeyVariable
+                        env.AWS_SECRET_ACCESS_KEY = secretKeyVariable
 
-                    sh 'aws eks update-kubeconfig --name eks-cluster'
-                    sh 'kubectl rollout restart deployment backend -n eks-ns'
-                    sh 'kubectl rollout restart deployment frontend -n eks-ns'
-                    echo 'deployed to EKS'
+                        sh 'aws eks update-kubeconfig --name eks-cluster'
+                        sh 'kubectl rollout restart deployment backend -n eks-ns'
+                        sh 'kubectl rollout restart deployment frontend -n eks-ns'
+                        echo 'deployed to EKS'
+                    }
                 }
             }
         }   
