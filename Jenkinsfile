@@ -9,7 +9,7 @@ pipeline {
         BACKEND_REPO = 'backend'
         FRONTEND_REPO = 'frontend'
         AWS_ACCOUNT_ID = '309276322609'
-        AWS_CREDENTIAL_ID = 'thinhnnd_aws_credential',
+        AWS_CREDENTIAL_ID = 'thinhnnd_aws_credential'
         MONGODB_CONNECTION_STRING = credentials('mongodb_connection_string')
     }
 
