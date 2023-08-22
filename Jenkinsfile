@@ -78,6 +78,7 @@ pipeline {
                 script {
 
                     withCredentials([string(credentialsId: 'thinhnnd_aws_credential', variable: 'AWS_CREDENTIALS')]) {
+                        echo AWS_CREDENTIALS;
                         sh "aws configure set aws_access_key_id ${AWS_CREDENTIALS_USR}"
                         sh "aws configure set aws_secret_access_key ${AWS_CREDENTIALS_PSW}"
                                                 
