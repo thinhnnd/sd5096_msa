@@ -74,10 +74,8 @@ pipeline {
 
         stage('Deploy to EKS') {
             steps {
-                steps {
-                    sh 'kubectl rollout restart deployment backend'
-                    sh 'kubectl rollout restart deployment frontend'
-                }
+                sh 'kubectl rollout restart deployment backend'
+                sh 'kubectl rollout restart deployment frontend'
                 echo 'deployed to EKS'
             }
         }   
