@@ -74,18 +74,11 @@ pipeline {
 
         stage('Deploy to EKS') {
             steps {
+                steps {
+                    sh 'kubectl rollout restart deployment backend'
+                    sh 'kubectl rollout restart deployment frontend'
+                }
                 echo 'deployed to EKS'
-
-                /* script {
-                    // Build frontend Docker image
-                    def frontendImage = docker.build(context: 'src/frontend', dockerfile: 'src/frontend/Dockerfile', tag: "${FRONTEND_REPO}:${env.BUILD_NUMBER}")
-                    // Push frontend image to ECR
-                    withAWS(region: AWS_REGION, credentials: 'aws-credential') {
-                        docker.withRegistry(ECR_REGISTRY, 'ap-southeast-1:my-aws-credentials') {
-                            frontendImage.push()
-                        }
-                    }
-                }*/
             }
         }   
     }
