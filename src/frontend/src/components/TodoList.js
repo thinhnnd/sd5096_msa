@@ -22,7 +22,7 @@ export default class TodoList extends React.Component {
           <li
             className={
               "list-group-item cursor-pointer " +
-              (i === this.state.activeIndex ? "active" : "")
+              (i === this.state.activeIndex ? "active bg-success" : "")
             }
             key={i}
             onClick={() => {
@@ -41,7 +41,7 @@ export default class TodoList extends React.Component {
     return todos.length > 0 ? (
       this.renderTodos(todos)
     ) : (
-      <div className="alert alert-success" role="alert">
+      <div className="alert alert-primary" role="alert">
         No Todos to display
       </div>
     );
