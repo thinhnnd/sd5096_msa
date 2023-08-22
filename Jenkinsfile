@@ -74,6 +74,7 @@ pipeline {
 
         stage('Deploy to EKS') {
             steps {
+                sh 'aws eks update-kubeconfig --name eks-cluster'
                 sh 'kubectl rollout restart deployment backend -n eks-ns'
                 sh 'kubectl rollout restart deployment frontend -n eks-ns'
                 echo 'deployed to EKS'
