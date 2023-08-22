@@ -77,10 +77,10 @@ pipeline {
             steps {
                 script {
 
-                    withAWS(credentials: 'thinhnnd_aws_credential', region: 'ap-southeast-1') {
+                    withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'aws-key', usernameVariable: 'AWS_ACCESS_KEY_ID', passwordVariable: 'AWS_SECRET_ACCESS_KEY']]) {
                         sh 'aws eks update-kubeconfig --name eks-cluster'
                         sh 'kubectl rollout restart deployment backend -n eks-ns'
-                        sh 'kubectl rollout restart deployment frontend -n eks-ns'
+                        sh 'kubectl rollout restart deployment frontend -n eks-ns'                    
                     }
 
                     echo 'deployed to EKS'
