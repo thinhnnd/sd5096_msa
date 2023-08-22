@@ -77,16 +77,13 @@ pipeline {
             steps {
                 script {
 
-                    withCredentials([string(credentialsId: 'thinhnnd_aws_credential', variable: 'AWS_CREDENTIALS')]) {
-                        echo AWS_CREDENTIALS;
-                        sh "aws configure set aws_access_key_id ${AWS_CREDENTIALS_USR}"
-                        sh "aws configure set aws_secret_access_key ${AWS_CREDENTIALS_PSW}"
-                                                
+                    withAWS(credentials: 'thinhnnd_aws_credential', region: 'ap-southeast-1') {
                         sh 'aws eks update-kubeconfig --name eks-cluster'
                         sh 'kubectl rollout restart deployment backend -n eks-ns'
                         sh 'kubectl rollout restart deployment frontend -n eks-ns'
-                        echo 'deployed to EKS'
                     }
+
+                    echo 'deployed to EKS'
                 }
             }
         }   
