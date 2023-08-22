@@ -1,5 +1,5 @@
 # Create image based on the official Node image from dockerhub
-FROM node:lts-buster AS development
+FROM node:18-buster AS development
 ENV DANGEROUSLY_DISABLE_HOST_CHECK=true
 # Create app directory
 WORKDIR /usr/src/app
