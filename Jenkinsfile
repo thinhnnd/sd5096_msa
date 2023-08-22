@@ -74,10 +74,19 @@ pipeline {
 
         stage('Deploy to EKS') {
             steps {
-                sh 'aws eks update-kubeconfig --name eks-cluster'
-                sh 'kubectl rollout restart deployment backend -n eks-ns'
-                sh 'kubectl rollout restart deployment frontend -n eks-ns'
-                echo 'deployed to EKS'
+                withCredentials([string(credentialsId: 'env.AWS_CREDENTIAL_ID', variable: 'secret')]) {
+                    script {
+                        def creds = readJSON text: secret
+                        env.AWS_ACCESS_KEY_ID = creds['accessKeyId']
+                        env.AWS_SECRET_ACCESS_KEY = creds['secretAccessKey']
+                    }
+
+                    sh 'aws eks update-kubeconfig --name eks-cluster'
+                    sh 'kubectl rollout restart deployment backend -n eks-ns'
+                    sh 'kubectl rollout restart deployment frontend -n eks-ns'
+                    echo 'deployed to EKS'
+                }
+
             }
         }   
     }
