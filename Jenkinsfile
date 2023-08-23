@@ -72,7 +72,8 @@ pipeline {
                 }
             }
         }   
-
+        // We will use Argo CD for auto sync and deploy image from ECR 
+/*
         stage('Deploy to EKS') {
             steps {
                 script {
@@ -87,6 +88,7 @@ pipeline {
                 }
             }
         }   
+*/
     }
 
     post {

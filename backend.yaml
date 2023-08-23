@@ -27,7 +27,7 @@ spec:
     spec:
       containers:
         - name: backend
-          image: 309276322609.dkr.ecr.ap-southeast-1.amazonaws.com/backend:9
+          image: 309276322609.dkr.ecr.ap-southeast-1.amazonaws.com/backend:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 5000
